@@ -1,8 +1,8 @@
+import kotlin.math.*
+
 class Circle(var x: Int, var y: Int, var radius: Int) : Figure(0), Transforming {
     override fun resize(zoom: Int) {
-        if (radius + zoom > 0){
-            radius += zoom
-        }
+        radius *= zoom
     }
 
     override fun rotate(direction: RotateDirection, centerX: Int, centerY: Int) {
@@ -12,16 +12,20 @@ class Circle(var x: Int, var y: Int, var radius: Int) : Figure(0), Transforming 
         x = centerX
         y = centerY
 
-        if (direction == RotateDirection.Clockwise) {
-            x += rzY
-            y -= rzX
-        } else if (direction == RotateDirection.CounterClockwise){
-            x -= rzY
-            y += rzX
+        when (direction) {
+            RotateDirection.Clockwise -> {
+                x += rzY
+                y -= rzX
+            }
+            RotateDirection.CounterClockwise -> {
+                x -= rzY
+                y += rzX
+            }
         }
     }
+
     override fun area(): Float {
-        return  0.toFloat();
+        return (radius * radius * PI).toFloat();
     }
 
     override fun toString(): String {
